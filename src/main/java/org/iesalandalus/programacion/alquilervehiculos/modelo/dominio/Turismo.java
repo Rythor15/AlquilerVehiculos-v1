@@ -2,70 +2,31 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 import java.util.Objects;
 
-public class Turismo {
+public class Turismo extends Vehiculo {
+	
+	private static final int FACTOR_CILINDRADA = 10;
 
-	private static final String ER_MARCA = "[A-Z][a-z]+([ -]?[A-Z][a-z]+)*|[A-Z]+";
-	private static final String ER_MATRICULA = "[/d]{4}[BCDFGHJKLMNPRSTVWXYZ]{3}";
-
-	private String marca;
-	private String modelo;
 	private int cilindrada;
-	private String matricula;
 
 	public Turismo(String marca, String modelo, int cilindrada, String matricula) {
-		setMarca(marca);
-		setModelo(modelo);
+		super(marca, modelo, matricula);
 		setCilindrada(cilindrada);
-		setMatricula(matricula);
 	}
 
 	public Turismo(Turismo turismo) {
+		super(turismo);
 		if (turismo == null) {
 			throw new NullPointerException("ERROR: No es posible copiar un turismo nulo.");
 		}
-	this.marca = turismo.marca;
-	this.modelo = turismo.modelo;
-	this.cilindrada = turismo.cilindrada;
-	this.matricula = turismo.matricula;
-	
-	}
+		this.marca = turismo.marca;
+		this.modelo = turismo.modelo;
+		this.cilindrada = turismo.cilindrada;
+		this.matricula = turismo.matricula;
 
-	public String getMarca() {
-		return marca;
-	}
-
-	public String getModelo() {
-		return modelo;
 	}
 
 	public int getCilindrada() {
 		return cilindrada;
-	}
-
-	public String getMatricula() {
-		return matricula;
-	}
-
-	private void setMarca(String marca) {
-
-		if (marca == null) {
-			throw new NullPointerException("ERROR: La marca no puede ser nula.");
-		}
-		if (!marca.matches(ER_MARCA)) {
-			throw new IllegalArgumentException("ERROR: La marca no tiene un formato válido.");
-		}
-		this.marca = marca;
-	}
-
-	private void setModelo(String modelo) {
-
-		if (modelo == null) {
-			throw new NullPointerException("ERROR: El modelo no puede ser nulo.");
-		}
-		if (modelo.isBlank()) {
-			throw new IllegalArgumentException("ERROR: El modelo no puede estar en blanco.");
-		}
-		this.modelo = modelo;
 	}
 
 	private void setCilindrada(int cilindrada) {
@@ -76,41 +37,34 @@ public class Turismo {
 		this.cilindrada = cilindrada;
 	}
 
-	private void setMatricula(String matricula) {
-
-		if (matricula == null) {
-			throw new NullPointerException("ERROR: La matrícula no puede ser nula.");
-		}
-		if (!matricula.matches(ER_MATRICULA)) {
-			throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
-		}
-		this.matricula = matricula;
-	}
-
-	public static Turismo getTurismoConMatricula(String matricula) {
-		return new Turismo("Seat", "León", 90, matricula);
-
+	@Override
+	public int getFactorPrecio() {
+		return cilindrada / FACTOR_CILINDRADA;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(matricula);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(cilindrada);
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Turismo))
 			return false;
 		Turismo other = (Turismo) obj;
-		return Objects.equals(matricula, other.matricula);
+		return cilindrada == other.cilindrada;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%s %s (%sCV) - %s", marca, modelo, cilindrada, matricula);
+		return String.format("%s %s (%s cc) - %s", marca, modelo, cilindrada, matricula);
 	}
+
 }

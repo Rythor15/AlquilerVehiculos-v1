@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehículo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
@@ -89,12 +89,12 @@ public class Consola {
 		return null;
 	}
 
-	public static final Turismo leerTurismo() {
+	public static final Vehículo leerTurismo() {
 		System.out.printf("%s", Consola.leerCadena(null));
 		return null;
 	}
 
-	public static final Turismo leerTursimoMatricula() {
+	public static final Vehículo leerTursimoMatricula() {
 		System.out.printf("%s", Consola.leerCadena(null));
 		return null;
 	}
